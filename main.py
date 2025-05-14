@@ -53,13 +53,18 @@ HTML = """
 """
 
 
+def pkcs7_pad(text, block_size=8):
+    pad_len = block_size - (len(text) % block_size)
+    return text + chr(pad_len) * pad_len
+
+
 def cifrar(texto, clave):
+    # MD5 hash de la clave
     key = MD5.new(clave.encode('utf-8')).digest()
-    key = key + key[:8]
+    key = key + key[:8]  # 24 bytes para TripleDES
     cipher = DES3.new(key, DES3.MODE_ECB)
-    while len(texto) % 8 != 0:
-        texto += ' '
-    encrypted = cipher.encrypt(texto.encode('utf-8'))
+    texto_padded = pkcs7_pad(texto)
+    encrypted = cipher.encrypt(texto_padded.encode('utf-8'))
     return b64encode(encrypted).decode('utf-8')
 
 
