@@ -19,14 +19,74 @@ HTML = """
 <head>
     <meta charset="UTF-8">
     <title>Generador de Código Offline</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body { font-family: Arial, sans-serif; background: #f4f4f4; }
-        .container { max-width: 400px; margin: 60px auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px #ccc; }
-        h2 { text-align: center; color: #333; }
-        label { display: block; margin-top: 15px; }
-        input[type="text"] { width: 100%; padding: 8px; margin-top: 5px; border-radius: 4px; border: 1px solid #bbb; }
-        button { margin-top: 20px; width: 100%; padding: 10px; background: #4CAF50; color: #fff; border: none; border-radius: 4px; font-size: 16px; }
-        .result { margin-top: 20px; padding: 10px; background: #e8f5e9; border: 1px solid #4CAF50; border-radius: 4px; color: #2e7d32; text-align: center; font-size: 18px; }
+        body { 
+            font-family: Arial, sans-serif; 
+            background: #f4f4f4; 
+            margin: 0;
+            padding: 0;
+        }
+        .container { 
+            max-width: 400px; 
+            margin: 60px auto; 
+            background: #fff; 
+            padding: 30px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 8px #ccc; 
+        }
+        h2 { 
+            text-align: center; 
+            color: #333; 
+        }
+        label { 
+            display: block; 
+            margin-top: 15px; 
+        }
+        input[type="text"] { 
+            width: 100%; 
+            padding: 8px; 
+            margin-top: 5px; 
+            border-radius: 4px; 
+            border: 1px solid #bbb; 
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button { 
+            margin-top: 20px; 
+            width: 100%; 
+            padding: 10px; 
+            background: #4CAF50; 
+            color: #fff; 
+            border: none; 
+            border-radius: 4px; 
+            font-size: 16px; 
+            cursor: pointer;
+        }
+        .result { 
+            margin-top: 20px; 
+            padding: 10px; 
+            background: #e8f5e9; 
+            border: 1px solid #4CAF50; 
+            border-radius: 4px; 
+            color: #2e7d32; 
+            text-align: center; 
+            font-size: 18px; 
+            word-break: break-all;
+        }
+        @media (max-width: 500px) {
+            .container {
+                margin: 20px 5px;
+                padding: 15px;
+                max-width: 98vw;
+            }
+            h2 {
+                font-size: 20px;
+            }
+            .result {
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body>
