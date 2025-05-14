@@ -4,7 +4,7 @@ from Crypto.Hash import MD5
 from base64 import b64encode
 import os
 
-# Puedes definir la clave aquí o usar una variable de entorno
+# Lee la clave desde la variable de entorno
 CLAVE = os.environ.get("CLAVE_OFFLINE")
 if not CLAVE:
     raise Exception(
@@ -93,11 +93,11 @@ HTML = """
     <div class="container">
         <h2>Generador de Código Offline</h2>
         <form method="post">
-            <label for="num1">Primer número:</label>
-            <input type="text" id="num1" name="num1" required pattern="[A-Za-z0-9]+">
+            <label for="num1">Primer valor:</label>
+            <input type="text" id="num1" name="num1" required>
 
-            <label for="num2">Segundo número:</label>
-            <input type="text" id="num2" name="num2" required pattern="[A-Za-z0-9]+">
+            <label for="num2">Segundo valor:</label>
+            <input type="text" id="num2" name="num2" required>
 
             <button type="submit">Generar código</button>
         </form>
@@ -155,7 +155,7 @@ def index():
     if request.method == "POST":
         num1 = request.form.get("num1", "").strip()
         num2 = request.form.get("num2", "").strip()
-        if num1.isalnum() and num2.isalnum():
+        if num1 and num2:
             cifrado = cifrar(num1 + num2, CLAVE)
             codigo = cifrado[10:15]
             descripcion = describir_codigo(codigo)
