@@ -106,6 +106,12 @@ HTML = """
                 <strong>Código offline generado:</strong><br>
                 {{ codigo }}
             </div>
+            {% if descripcion %}
+                <div class="result" style="background:#fffbe6; color:#8a6d3b; border:1px solid #ffe58f; margin-top:10px;">
+                    <strong>Descripción:</strong><br>
+                    {{ descripcion }}
+                </div>
+            {% endif %}
         {% endif %}
     </div>
 </body>
@@ -128,18 +134,34 @@ def cifrar(texto, clave):
     return b64encode(encrypted).decode('utf-8')
 
 
+def describir_codigo(codigo):
+    descripciones = []
+    for c in codigo:
+        if c.isdigit():
+            descripciones.append(f"número {c}")
+        elif c.isupper():
+            descripciones.append(f"letra {c} (mayúscula)")
+        elif c.islower():
+            descripciones.append(f"letra {c} (minúscula)")
+        else:
+            descripciones.append(f"símbolo {c}")
+    return ', '.join(descripciones)
+
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     codigo = None
+    descripcion = None
     if request.method == "POST":
         num1 = request.form.get("num1", "").strip()
         num2 = request.form.get("num2", "").strip()
         if num1.isalnum() and num2.isalnum():
             cifrado = cifrar(num1 + num2, CLAVE)
             codigo = cifrado[10:15]
+            descripcion = describir_codigo(codigo)
         else:
             codigo = "Entradas inválidas"
-    return render_template_string(HTML, codigo=codigo)
+    return render_template_string(HTML, codigo=codigo, descripcion=descripcion)
 
 
 if __name__ == "__main__":
